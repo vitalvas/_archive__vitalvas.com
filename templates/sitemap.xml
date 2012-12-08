@@ -15,6 +15,11 @@
 		<changefreq>daily</changefreq>
 		<priority>0.80</priority>
 	</url>
+	<url>
+		<loc>http://www.vitalvas.com/links/</loc>
+		<changefreq>daily</changefreq>
+		<priority>0.75</priority>
+	</url>
 	{% for p in post %}
 	<url>
 		<loc>{{p.domain}}{{p.url}}</loc>
