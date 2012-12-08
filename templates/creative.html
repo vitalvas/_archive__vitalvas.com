@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title_page %}Всякое творю | VitalVas{% endblock %}
+{% block head_page %}
+<link rel="stylesheet" href="/static/colorbox/colorbox.css" type="text/css">
+<script type="text/javascript" src="/static/jquery.colorbox.js" charset="utf-8"></script>
+<script type="text/javascript">$(document).ready(function(){$(".instagram_photo").colorbox({rel:'instagram_photo'});});	</script>
+{% endblock %}
+{% block main_content %}
+<h2>Фотки</h2>
+<p>{% for photo in inst_photos %}<a class="instagram_photo" href="{{photo.standard_resolution.url}}"><img src="{{photo.thumbnail.url}}"></a>{% endfor %}</p>
+
+
+{% endblock %}

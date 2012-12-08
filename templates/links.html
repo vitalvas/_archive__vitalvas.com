@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title_page %}ЛинкБлог | VitalVas{% endblock %}
+{% block main_content %}
+<ol class="links">
+{% for p in links %}
+<li>
+	{% if p.pre_title %}{{p.pre_title}}{% endif%}
+	<a href="{{p.link|safe}}" rel="nofollow" target="_blank">{{p.title|safe}}</a>
+	{% if p.post_title %}{{p.post_title}}{% endif %}
+</li>
+{% endfor %}
+</ol>
+{% endblock %}

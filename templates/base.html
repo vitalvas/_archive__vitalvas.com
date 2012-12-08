@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>{%block title_page%}{%endblock%}</title>
+		<meta name="author" content="VitalVas">
+		<meta name="description" content="Руководитель департамента приема в AD. Сектор наземного тестирования">
+		<meta name="keywords" meta="VitalVas, vitalvas, блог, blog, vvitalvas, персональный сайт, gangnam style, линкблог, линк, бобук, bobuk, без смс, python, django, mysql, mongodb">
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="HandheldFriendly" content="true">
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="/favicon.ico" type="image/x-icon">
+		<link href="http://feeds.feedburner.com/VitalVasBlog" rel="alternate" title="VitalVas здесь был" type="application/atom+xml">
+		<link rel="apple-touch-icon" href="/favicon.ico">
+		<link rel="stylesheet" href="/static/style.css" type="text/css">
+		<!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
+		<script type="text/javascript" src="//yandex.st/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript" src="/static/colors.js"></script>
+		{% block head_page %}{% endblock %}
+	</head>
+	<body>
+		<div class="header_wrap">
+			<nav>
+				<div class="title">
+					<span title="есть и будет" onmouseover="AlterColor()"><span id="hover-color">VitalVas</span> здесь был</span>
+				</div>
+				<ul class="menu">
+					<li{% if type == 'index' %} class="current_item"{% endif %}><a href="/">Главная</a></li>
+					<li{% if type == 'blog' %} class="current_item"{% endif %}><a href="/blog/">Бложек</a></li>
+					{% if is_admin %}<li{% if type == 'links' %} class="current_item"{% endif %}><a href="/links/">Линкоблог</a></li>{% endif %}
+					<li{% if type == 'creative' %} class="current_item"{% endif%}><a href="/creative/">Творю</a></li>
+				</ul>
+			</nav>
+		</div>
+		<div class="content_wrap">
+			<div class="content_container">
+				{% block main_content %}{% endblock %}
+			</div>
+		</div>
+		<div class="footer_wrap">
+			<div class="footer_container">
+				<script type="text/javascript">
+				new Image().src = "//counter.yadro.ru/hit?r" + escape(document.referrer)+((typeof(screen)=="undefined")?"":
+				";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth? screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+				";"+Math.random();
+				</script>
+				<script type="text/javascript">
+						var _gaq=[["_setAccount","UA-28006057-1"],["_trackPageview"]];
+						(function(d,t){
+							var g=d.createElement(t), s=d.getElementsByTagName(t)[0]; g.async=1;
+					    	g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";
+					    	s.parentNode.insertBefore(g,s)
+					    }(document,"script"));
+				</script>
+				{% if login_url %}
+				<div class="admin_desk">
+					{% if is_admin %}
+						<a href="javascript:Q=document.selection?document.selection.createRange().text:document.getSelection();void(window.open('http://www.vitalvas.com/links/new_link?topframe=1&descr='+Q+'&url='+document.location.href,'link','scrollbars=yes,width=800,height=700,left=0,top=0,resizable=yes,status=yes'));">JS Линкблога</a><br>
+						<a href="/blog/new_post">Написать в блог</a><br>
+						<a href="{{logout_url}}">Выйти</a>
+					{% else %}
+						<a href="{{login_url}}" style="color:#555;">Войти</a>
+					{% endif %}
+				</div>
+				{% endif %}
+				<span class="coppyr">&copy; vitalvas 1993-2013</span>
+			</div>
+		</div>
+	</body>
+</html>

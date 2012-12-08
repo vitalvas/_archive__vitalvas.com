@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title_page %}{{post.title}}{% endblock %}
+{% block head_page %}
+<script type="text/javascript">
+	var disqus_shortname = 'vvitalvasblog';
+	var disqus_url = '{{post.domain}}{{post.url}}';
+	var disqus_identifier = '{{post.domain}}{{post.url}}';
+	(function() {
+		var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	})();
+</script>
+{% endblock %}
+{% block main_content %}
+<article role="article">
+	<header>
+		<h2 class="entry-title">{{post.title}}</h2>
+	</header>
+	<div class="entry-content">
+		{{post.data_full|safe}}
+	</div>
+	<footer class="entry-footer">
+		<time datetime="{{post.sort_date}}" pubdate data-updated="true">{{post.public_date}}</time>
+	</footer>
+</article>
+<section>
+	<div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript></div>
+</section>
+{% endblock %}
