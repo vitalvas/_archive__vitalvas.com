@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<title>VitalVas здесь был</title>
+	<link href="http://www.vitalvas.com/"/>
+	<author>
+		<name>Vitaliy Vasilenko</name>
+		<email>feed@vitalvas.com</email>
+	</author>
+	{% for post in posts %}
+	<entry>
+		<title>{{ post.title }}</title>
+		<link href="{{ post.domain }}{{ post.url }}"/>
+		<updated>{{ post.sort_date }}</updated>
+		<summary>Частичный или полный просмотр публикации пока не доступен</summary>
+	</entry>
+	{% endfor %}
+</feed>

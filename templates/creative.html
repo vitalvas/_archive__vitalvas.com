@@ -6,8 +6,14 @@
 <script type="text/javascript">$(document).ready(function(){$(".instagram_photo").colorbox({rel:'instagram_photo'});});	</script>
 {% endblock %}
 {% block main_content %}
+<!-- Творю в основном всякую херню, но иногда бывает что-то интересное. -->
 <h2>Фотки</h2>
-<p>{% for photo in inst_photos %}<a class="instagram_photo" href="{{photo.standard_resolution.url}}"><img src="{{photo.thumbnail.url}}"></a>{% endfor %}</p>
-
+<p>
+	{% for photo in inst_photos %}
+	<a class="instagram_photo" href="{{photo.standard_resolution.url}}">
+		<img src="{{photo.thumbnail.url}}">
+	</a>
+	{% endfor %}
+</p>
 
 {% endblock %}

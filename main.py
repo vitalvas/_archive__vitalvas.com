@@ -117,6 +117,15 @@ class ShowBlog(webapp2.RequestHandler):
 			if use_memcache: memcache.add("blog", data, 3600)
 		finally:
 			self.response.write(data)
+
+class ShowBlogRss(webapp2.RequestHandler):
+	def get(self):
+		query = db.GqlQuery("SELECT * from Post WHERE publish=True AND publish_rss=True ORDER BY sort_date DESC").fetch(10)
+		resp = []
+		for line in query:
+			resp.append(BlogOutputWorker(line))
+		self.response.write(template.render('templates/atom.xml',{'posts':resp}))
+		self.response.headers.add_header("Content-type", 'text/xml')
 		
 
 class NewBlogPost(webapp2.RequestHandler):
@@ -216,11 +225,14 @@ class NewLink(webapp2.RequestHandler):
 		post = Links()
 		post.link = self.request.get('url')
 		post.title = self.request.get('name')
+		post.pre_title = self.request.get('pre_name')
+		post.post_title = self.request.get('post_name')
 		if self.request.get('publish') == 'True':
 			post.publish = True
 		else:
 			post.publish = False
 		post.put()
+		if use_memcache: memcache.delete("links")
 		if self.request.get('topframe'):
 			self.response.write("Published :)<script type='text/javascript'>window.close();</script>")
 		else:
@@ -246,6 +258,7 @@ app = webapp2.WSGIApplication([
 	('/blog/', ShowBlog),
 	('/blog/new_post', NewBlogPost),
 	('/blog/([0-9]{4})/([0-9]{2})/([0-9]{2})/([a-zA-Z0-9-]+)+/', ShowBlogPost),
+	('/blog/atom.xml', ShowBlogRss),
 	('/sitemap.xml', ShowSitemap),
 	('/creative/', ShowCreative),
 	('/links/', ShowLinks),

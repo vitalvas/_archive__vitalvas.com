@@ -11,6 +11,7 @@
 		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 	})();
 </script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 {% endblock %}
 {% block main_content %}
 <article role="article">
@@ -23,6 +24,7 @@
 	<footer class="entry-footer">
 		<time datetime="{{post.sort_date}}" pubdate data-updated="true">{{post.public_date}}</time>
 	</footer>
+	<a href="http://twitter.com/share" class="twitter-share-button" data-url="{{ post.domain }}{{ post.url }}" data-counturl="{{ post.domain }}{{ post.url }}" lang="ru">Tweet</a>
 </article>
 <section>
 	<div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript></div>
