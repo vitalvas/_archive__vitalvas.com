@@ -48,8 +48,8 @@ class BlogOutputWorker():
 		self.publish = query.publish
 		self.sort_date = query.sort_date
 		self.__youtube()
-		self.__split()
 		self.__markdown()
+		self.__split()
 		self.__generate_url()
 		self.__public_date()
 	def __split(self):
@@ -64,7 +64,6 @@ class BlogOutputWorker():
 			self.data_full = self.data
 	def __markdown(self):
 		self.data = markdown.markdown(self.data, extras=["cuddled-lists","wiki-tables","nofollow"])
-		self.data_full = markdown.markdown(self.data_full, extras=["cuddled-lists","wiki-tables","nofollow"])
 	def __generate_url(self):
 		self.url = "/blog/%s/%s/" % (datetime.strftime(self.date, "%Y/%m/%d"), self.name)
 	def __public_date(self):
