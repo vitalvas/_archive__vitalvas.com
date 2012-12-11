@@ -91,7 +91,7 @@ class MainHandler(webapp2.RequestHandler):
 		else:
 			try:
 				if use_memcache is False: raise Exception("Cache disabled")
-				data_out = memcache.get("main")
+				if use_memcache: data_out = memcache.get("main")
 				if not data_out: raise Exception("Data not in cache")
 			except:
 				data_out = template.render('templates/main.html',{'type':'index',
@@ -107,7 +107,7 @@ class ShowBlog(webapp2.RequestHandler):
 	def get(self):
 		try:
 			if use_memcache is False: raise Exception("Cache disabled")
-			data = memcache.get("blog")
+			if use_memcache: data = memcache.get("blog")
 			if not data: raise Exception("Data not in cache")
 		except:
 			query = db.GqlQuery("SELECT * FROM Post WHERE publish=True ORDER BY sort_date DESC").fetch(7)
@@ -140,7 +140,7 @@ class ShowBlogPost(webapp2.RequestHandler):
 		cache_key = "blog-%s-%s" % (date, name)
 		try:
 			if use_memcache is False: raise Exception("Cache disabled")
-			data_out = memcache.get(cache_key)
+			if use_memcache: data_out = memcache.get(cache_key)
 			if not data_out: raise Exception("Data not in cache")
 		except:
 			res = db.GqlQuery("SELECT * FROM Post WHERE name=:1 AND date=DATE(:2)", name, date).get()
@@ -165,7 +165,7 @@ class ShowSitemap(webapp2.RequestHandler):
 	def get(self):
 		try:
 			if use_memcache is False: raise Exception("Cache disabled")
-			data_out = memcache.get("sitemap")
+			if use_memcache: data_out = memcache.get("sitemap")
 			if not data_out: raise Exception("Data not in cache")
 		except:
 			req = db.GqlQuery("SELECT * FROM Post WHERE publish=True ORDER BY sort_date DESC")
@@ -183,7 +183,7 @@ class ShowCreative(webapp2.RequestHandler):
 	def get(self):
 		try:
 			if use_memcache is False: raise Exception("Cache disabled")
-			data_out = memcache.get("creative")
+			if use_memcache: data_out = memcache.get("creative")
 			if not data_out: raise Exception("Data not in cache")
 		except:
 			inst_cache = memcache.get("instagram-photos")
@@ -232,7 +232,7 @@ class ShowLinks(webapp2.RequestHandler):
 	def get(self):
 		try:
 			if use_memcache is False: raise Exception("Cache disabled")
-			data_out = memcache.get("links")
+			if use_memcache: data_out = memcache.get("links")
 			if not data_out: raise Exception("Data not in cache")
 		except:
 			query = db.GqlQuery("SELECT * FROM Links WHERE publish=True ORDER BY date DESC").fetch(50)
