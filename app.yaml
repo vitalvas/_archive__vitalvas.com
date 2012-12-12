@@ -4,6 +4,16 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
+error_handlers:
+- file: templates/error.html
+
+admin_console:
+    pages:
+    - name: Add new post
+      url: /blog/new_post
+    - name: Add new Link
+      url: /links/new_link
+
 handlers:
 - url: /favicon\.ico
   static_files: static/favicon.ico

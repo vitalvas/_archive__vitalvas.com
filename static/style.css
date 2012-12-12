@@ -44,3 +44,4 @@ a[rel="full-article"]:hover {background:#0181eb;text-shadow:none;color:#fff;}
 .embed-video-container iframe {border-radius:0.3em;box-shadow:rgba(0,0,0,0.15) 0px 1px 4px; border:#fff 0.4em solid;}
 ol.links {margin-left:20px;list-style-type: lower-greek;}
 h1, h2, h3, h4, h5, h6 {text-rendering: optimizelegibility; color:rgb(49,49,49); font-family: 'Philosopher', sans-serif; margin:0;}
+#vkshare0, .fb-like { display:inline-block;}
