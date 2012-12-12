@@ -6,3 +6,4 @@ Disallow: /tag/*
 Disallow: /tagged/*
 Crawl-delay: 3
 Sitemap: http://www.vitalvas.com/sitemap.xml
+Host: www.vitalvas.com
