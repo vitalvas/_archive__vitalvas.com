@@ -1,6 +1,35 @@
 {% extends 'base.html' %}
 {% block title_page %}VitalVas здесь был{% endblock %}
+{% block head_page %}
+<script type="text/javascript" src="http://vitalvas.github.com/js/twitter.userFeed.js"></script>
+<script type="text/javascript">Twitter.getTwitterFeed('vitalvas', 9, false, 'tweets');</script>
+{% endblock %}
 {% block main_content %}
-<meta http-equiv="refresh" content="3; url=blog/">
-<img src="http://www.thehealthcoop.com/wp-content/uploads/2012/07/The-Health-Co-Op-Site-in-Progress.jpg" alt="">
+<!--<meta http-equiv="refresh" content="3; url=blog/">
+<img src="http://www.thehealthcoop.com/wp-content/uploads/2012/07/The-Health-Co-Op-Site-in-Progress.jpg" alt="">-->
+
+<div class="main-left">
+	<h3>Здравствуйте, присаживайтесь.</h3>
+	<p>Вы попали на личную территорию человека с никнеймом VitalVas, у которого реальное имя - Виталий Василенко.</p>
+	<p>Это информационное пространство принадлежит только автору этого сайтика, который решает что сюда писать, и куда линки оставлять.</p>
+	<p>Теперь немного о том, как здесь все устроено.</p>
+	<ul>
+		<li>Вкладка "<a href="/blog/">Бложек</a>" - это стандартный блог, концепция которого была нагло содрана с движка <a target="_blank" rel="nofollow" href="http://octopress.org">Octopress</a></li>
+		<li>Вкладка "<a href="/links/">Линкоблог</a>" - это небольшой эксперимент по распространению интересной информации без публикации в блог</li>
+		<li>Вкладка "<a href="/creative/">Творю</a>" - это всего-то творчество автора</li>
+	</ul>
+	
+	
+	
+	
+</div>
+
+<div class="main-right">
+	<h3>Твиттер</h3>
+	<ul id="tweets">
+	  <li class="loading">Status updating...</li>
+	</ul>
+</div>
+
+
 {% endblock %}

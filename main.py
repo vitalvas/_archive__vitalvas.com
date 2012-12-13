@@ -120,12 +120,20 @@ class ShowBlog(webapp2.RequestHandler):
 
 class ShowBlogRss(webapp2.RequestHandler):
 	def get(self):
-		query = db.GqlQuery("SELECT * from Post WHERE publish=True AND publish_rss=True ORDER BY sort_date DESC").fetch(10)
-		resp = []
-		for line in query:
-			resp.append(BlogOutputWorker(line))
-		self.response.write(template.render('templates/atom.xml',{'posts':resp}))
-		self.response.headers.add_header("Content-type", 'text/xml')
+		try:
+			if use_memcache is False: raise Exception("Cache disabled")
+			if use_memcache: data_out = memcache.get("blog-rss")
+			if not data_out: raise Exception("Data not in cache")
+		except:
+			query = db.GqlQuery("SELECT * from Post WHERE publish=True AND publish_rss=True ORDER BY sort_date DESC").fetch(10)
+			resp = []
+			for line in query:
+				resp.append(BlogOutputWorker(line))
+			data_out = template.render('templates/atom.xml',{'posts':resp})
+			if use_memcache: memcache.add("blog-rss", data_out, 3600)
+		finally:
+			self.response.write(data_out)
+			self.response.headers.add_header("Content-type", 'text/xml')
 		
 
 class NewBlogPost(webapp2.RequestHandler):
