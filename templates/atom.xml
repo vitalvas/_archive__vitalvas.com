@@ -11,7 +11,7 @@
 		<title>{{ post.title }}</title>
 		<link href="{{ post.domain }}{{ post.url }}"/>
 		<updated>{{ post.sort_date }}</updated>
-		<summary>Частичный или полный просмотр публикации пока не доступен</summary>
+		<content type="html">Частичный или полный просмотр публикации пока не доступен</content>
 	</entry>
 	{% endfor %}
 </feed>

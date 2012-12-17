@@ -6,15 +6,15 @@ html, body, div, span, img, ol, ul, li, form, tr, td {margin:0;padding:0;vertica
 html, body {margin:0;padding:0;color:#555;background:rgb(60,60,60) url(background.png);}
 .header_wrap {height:90px;min-width:940px;}
 .header_wrap nav {width:940px;position:relative;height:90px;margin:0 auto;}
-.header_wrap nav .title {cursor:default;color:rgb(110,110,110);line-height: 64px; font-size:1em; padding-left:20px;}
+.header_wrap nav .title {cursor:default;color:rgb(110,110,110);line-height: 64px; font-size:1em;}
 .header_wrap nav .title #hover-color {color:white;font-size:1.3em;}
 .header_wrap .menu {list-style:none;position:absolute;left:0px;bottom:0px;font-size:.8em;}
 .header_wrap .menu li {float:left;margin:0px;}
 .header_wrap .menu li a {color:#f7f7f7;display:inline-block;text-transform:uppercase;text-decoration:none;
-	background-color:#000;padding:7px 13px;margin-right:2px;border-bottom:0px solid #000;}
+	background-color:#000;padding:7px 13px;margin-right:2px;border-bottom:0px solid #000; font-family:Arial,Helvetica,sans-serif;}
 .header_wrap .menu li.current_item a,
 .header_wrap .menu li a:hover {background-color:#f7f7f7;color:#000;border-bottom:0px dashed #e0e0e0;}
-.content_wrap {min-width:980px;min-height:500px;background-color:#f7f7f7;}
+.content_wrap {min-width:980px;min-height:580px;background-color:#f7f7f7;}
 .content_container {width:940px;margin:0 auto;padding:20px;}
 .footer_container {width:940px;min-width:940px;margin:0 auto;padding:20px 0 30px 0;position: relative;font-size: .8em; min-height: 50px;}
 .footer_container .coppyr {position:absolute;right:0;bottom:0;}
@@ -60,3 +60,4 @@ h1, h2, h3, h4, h5, h6 {text-rendering: optimizelegibility; color:rgb(49,49,49);
 .main-left {display:inline-block; max-width:600px;}
 p {margin:5px 0;text-align:justify;}
 li {margin:7px 0 7px 17px;}
+p.instagram{text-align:left;}

@@ -14,7 +14,7 @@ if os.getcwd() == "/Users/vitalvas/Yandex.Disk/GoogleAppEngine/blogek":
 	use_memcache=False
 	is_debug=True
 else:
-	use_memcache=True
+	use_memcache=False
 	is_debug=False
 
 class Post(db.Model):
@@ -125,7 +125,7 @@ class ShowBlogRss(webapp2.RequestHandler):
 			if use_memcache: data_out = memcache.get("blog-rss")
 			if not data_out: raise Exception("Data not in cache")
 		except:
-			query = db.GqlQuery("SELECT * from Post WHERE publish=True AND publish_rss=True ORDER BY sort_date DESC").fetch(10)
+			query = db.GqlQuery("SELECT * FROM Post WHERE publish=True AND publish_rss=True ORDER BY sort_date DESC").fetch(10)
 			resp = []
 			for line in query:
 				resp.append(BlogOutputWorker(line))
@@ -134,7 +134,27 @@ class ShowBlogRss(webapp2.RequestHandler):
 		finally:
 			self.response.write(data_out)
 			self.response.headers.add_header("Content-type", 'text/xml')
-		
+
+
+class ShowLinksRss(webapp2.RequestHandler):
+	def get(self):
+		try:
+			if use_memcache is False: raise Exception("Cache disabled")
+			if use_memcache: data_out = memcache.get("links-rss")
+			if not data_out: raise Exception("Data not in cache")
+		except:
+			query = db.GqlQuery("SELECT * FROM Links WHERE publish=True ORDER BY date DESC").fetch(10)
+			resp = []
+			for line in query:
+				title = [line.pre_title, line.title, line.post_title]
+				line.p_title = " ".join(title)
+				resp.append(line)
+			data_out = template.render('templates/atom_links.xml',{'posts':resp})
+			if use_memcache: memcache.add("links-rss", data_out, 3600)
+		finally:
+			self.response.write(data_out)
+			self.response.headers.add_header("Content-type", 'text/xml')
+
 
 class NewBlogPost(webapp2.RequestHandler):
 	def get(self):
@@ -159,20 +179,16 @@ class ShowBlogPost(webapp2.RequestHandler):
 			if use_memcache: data_out = memcache.get(cache_key)
 			if not data_out: raise Exception("Data not in cache")
 		except:
-			res = db.GqlQuery("SELECT * FROM Post WHERE name=:1 AND date=DATE(:2)", name, date).get()
+			res = db.GqlQuery("SELECT * FROM Post WHERE name=:1 AND publish=True AND date=DATE(:2)", name, date).get()
 			if not res:
 				self.error(404)
-				data_out = template.render('templates/error.html',{'error':'404','error_msg':'Not found'})
-				if use_memcache: memcache.add(cache_key, data_out, 30)
+#				data_out = template.render('templates/error.html',{'error':'404','error_msg':'Not found'})
+#				if use_memcache: memcache.add(cache_key, data_out, 30)
+				data_out = "<a href='/'>Go to index page</a>"
 			else:
-				if res.publish is True or users.is_current_user_admin():
-					res = BlogOutputWorker(res)
-					data_out = template.render('templates/blogpost.html',{'post':res,"name":name, 'type':'blog'})
-					if use_memcache: memcache.add(cache_key, data_out, 3600)
-				else:
-					self.error(404)
-					data_out = template.render('templates/error.html',{'error':'404','error_msg':'Not found'})
-					if use_memcache: memcache.add(cache_key, data_out, 30)
+				res = BlogOutputWorker(res)
+				data_out = template.render('templates/blogpost.html',{'post':res,"name":name, 'type':'blog'})
+				if use_memcache: memcache.add(cache_key, data_out, 3600)
 		finally:
 			self.response.write(data_out)
 
@@ -270,5 +286,6 @@ app = webapp2.WSGIApplication([
 	('/sitemap.xml', ShowSitemap),
 	('/creative/', ShowCreative),
 	('/links/', ShowLinks),
-	('/links/new_link', NewLink)
+	('/links/new_link', NewLink),
+	('/links/atom.xml', ShowLinksRss)
 ], debug=is_debug)

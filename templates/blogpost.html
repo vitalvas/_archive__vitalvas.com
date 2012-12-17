@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title_page %}{{post.title}}{% endblock %}
+{% block description_page %}{{post.title}} - {{post.domain}}{{post.url}}{% endblock%}
 {% block head_page %}
 <script type="text/javascript">
 	var disqus_shortname = 'vvitalvasblog';
@@ -22,6 +23,11 @@
 		s.parentNode.insertBefore(script, s);
     })();
  </script>
+ <meta name="twitter:card" content="summary">
+ <meta name="twitter:creator" content="@vitalvas">
+ <meta name="twitter:url" content="{{ post.domain }}{{ post.url }}">
+ <meta name="twitter:title" content="{{ post.title }}">
+ <meta name="twitter:description" content="{{ post.title }}">
 {% endblock %}
 {% block main_content %}
 <article role="article">
