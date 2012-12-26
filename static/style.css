@@ -2,7 +2,7 @@
 @import url(http://fonts.googleapis.com/css?family=Marck+Script&subset=cyrillic);
 @import url(http://fonts.googleapis.com/css?family=Bad+Script&subset=cyrillic);
 @import url(http://fonts.googleapis.com/css?family=Philosopher&subset=cyrillic);
-html, body, div, span, img, ol, ul, li, form, tr, td {margin:0;padding:0;vertical-align: baseline}
+html, body, div, span, img, ol, ul, li, form, tr, td {margin:0;padding:0;}
 html, body {margin:0;padding:0;color:#555;background:rgb(60,60,60) url(background.png);}
 .header_wrap {height:90px;min-width:940px;}
 .header_wrap nav {width:940px;position:relative;height:90px;margin:0 auto;}
