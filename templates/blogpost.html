@@ -28,6 +28,9 @@
  <meta name="twitter:url" content="{{ post.domain }}{{ post.url }}">
  <meta name="twitter:title" content="{{ post.title }}">
  <meta name="twitter:description" content="{{ post.title }}">
+<meta property="og:title" content="{{ post.title }}"/>
+<meta property="og:url" content="{{ post.domain }}{{ post.url }}"/>
+<meta property="og:description" content="{{ post.title }}"/>
 {% endblock %}
 {% block main_content %}
 <article role="article">
