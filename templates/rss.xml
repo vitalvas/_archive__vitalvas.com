@@ -1,0 +1,17 @@
+<rss version="0.92">
+	<channel>
+		<title>VitalVas здесь был</title>
+		<link>http://www.vitalvas.com/</link>
+		<description>Он не только был здесь, а есть и будет сколько захочет</description>
+		<lastBuildDate></lastBuildDate>
+		<docs>http://backend.userland.conf/rss092</docs>
+		<language>ru</language>
+		{% for it in items %}
+		<item>
+			<title>{{it.title}}</title>
+			<description><![CDATA[{{it.content|safe|truncatewords:30}}[...]]]></description>
+			<link>{{it.link|safe}}</link>
+		</item>
+		{% endfor %}
+	</channel>
+</rss>

@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block title_page %}{% if act == 'category' %}Категории{% endif %}{% if act == 'list'%}Бложек{% endif %}{% if post.title %}{{post.title}}{% endif %} - VitalVas{% endblock %}
+{% block head_page %}
+<script type="text/javascript">
+	var disqus_shortname = 'newtestthis';
+	{% if act == 'post' %}
+	var disqus_url = '{{conf.domain}}{{post.url}}';
+	var disqus_identifier = '{{conf.domain}}{{post.url}}';
+	{% endif %}
+	(function () {
+		var s = document.createElement('script'); s.async = true; s.type = 'text/javascript';
+		{% if act == 'post' %}
+		s.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+		{% else %}
+		s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+		{% endif %}
+		(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+	}());
+</script>
+{% if act == 'post' %}
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<script type="text/javascript" src="http://vk.com/js/api/share.js?11" charset="windows-1251"></script>
+<script type="text/javascript">
+    (function() {var script = document.createElement('script'); 
+		script.type = 'text/javascript';
+		script.async = true;
+		script.src = 'https://apis.google.com/js/plusone.js';
+		var s = document.getElementsByTagName('script')[0]; 
+		s.parentNode.insertBefore(script, s);
+    })();
+</script>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@vitalvas">
+<meta name="twitter:url" content="{{ conf.domain }}{{ post.url }}">
+<meta name="twitter:title" content="{{ post.title }}">
+<meta name="twitter:description" content="{{ post.title }}">
+<meta property="og:title" content="{{ post.title|safe }}"/>
+<meta property="og:url" content="{{ conf.domain }}{{ post.url }}"/>
+<meta property="og:description" content="{{ post.title|safe }}"/>
+{% if post.og_img %}
+<meta property="og:image" content="{{post.og_img}}"/>
+<meta name="twitter:image" content="{{post.og_img}}">
+{% endif %}
+{% endif %}
+
+{% endblock %}
+
+{% block main_content %}
+{% if act == 'tags' %}
+	<h3>Теги</h3>
+	<p>Обратите внимание, что одна и та же запись может принадлежать сразу к нескольким тегам. То есть, тег — это просто тематическая метка, с помошю которой можно удобно находить нужные посты.</p>
+	<p>
+		<ul>
+		{% for t in tags %}
+			<li><a href="/blog/tags/{{t.url}}/">{{t}}</a> ({{t.post_set.count}})</li>
+		{% endfor %}
+		</ul>
+	</p>
+{% endif %}
+
+{% if act == 'list' %}
+{% for p in posts %}
+<article role="article" class="listblog">
+	<header>
+		<h2 class="entry-title"><a href="{{p.url}}">{{p.title}}</a></h2>
+	</header>
+	<div class="entry-content">
+		{{p.html_compile|safe}}
+	</div>
+	<footer class="entry-footer">
+		<time datetime="{{p.published}}" pubdate data-updated="true">{{p.published}}</time>
+		&nbsp;-&nbsp;
+		<a href="{{conf.domain}}{{p.url}}#disqus_thread">Comments</a>
+		<a rel="full-article" href="{{p.url}}">Далее →</a>
+	</footer>
+</article>
+{% endfor %}
+{% endif %}
+
+{% if act == 'post' %}
+<article role="article">
+	<header>
+		<h2 class="entry-title">{{post.title}}</h2>
+	</header>
+	<div class="entry-content">
+		{{post.html_compile|safe}}
+	</div>
+	<footer class="entry-footer">
+		<time datetime="{{post.published}}" pubdate data-updated="true">{{post.published}}</time>
+	</footer>
+	<script type="text/javascript">document.write(VK.Share.button({url: "{{ conf.domain }}{{ post.url }}"},{type: "button", text: "Share"}));</script>
+	<a href="http://twitter.com/share" class="twitter-share-button" data-url="{{ conf.domain }}{{ post.url }}" data-counturl="{{ conf.domain }}{{ post.url }}" lang="en">Tweet</a>
+	<div class="g-plusone" data-size="medium"></div>
+	
+	
+</article>
+<section>
+	<div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript></div>
+</section>
+
+{% endif %}
+
+{% endblock %}

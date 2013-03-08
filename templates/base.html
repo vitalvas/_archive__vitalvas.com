@@ -2,29 +2,22 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>{%block title_page%}{%endblock%}</title>
+		<title>{%block title_page%}VitalVas здесь был{%endblock%}</title>
 		<meta name="author" content="VitalVas">
 		<meta name="description" content="{% block description_page %}Руководитель департамента приема в AD. Сектор наземного тестирования{% endblock %}">
-		<meta name="keywords" meta="VitalVas, vitalvas, блог, blog, vvitalvas, персональный сайт, gangnam style, линкблог, линк, бобук, bobuk, без смс, python, django, mysql, mongodb">
+		<meta name="keywords" meta="VitalVas, vitalvas, блог, blog, vvitalvas, персональный сайт, gangnam style, линкблог, линк, без смс, python, django, mysql, mongodb">
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<meta name="HandheldFriendly" content="true">
 		<meta name='yandex-verification' content='6db1d47f021fa63f' />
 		<meta name="google-site-verification" content="-Lx45KkppBRqs2gwjuFY7Qt5GyEgh1URGJCNWAuLT54" />
 		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 		<link href="http://feeds.feedburner.com/VitalVasBlog" rel="alternate" title="VitalVas здесь был" type="application/atom+xml">
-		<link rel="apple-touch-icon" href="/favicon.ico">
 		<link rel="stylesheet" href="/static/style.css" type="text/css">
 		<!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
 		<script type="text/javascript" src="//yandex.st/jquery/1.8.2/jquery.min.js"></script>
 		<script type="text/javascript" src="/static/js/colors.js"></script>
-		<script type="text/javascript">
-		if ($(window).width() < 950) {
-			$('.header_wrap .title').css('padding-left','20');
-		}
-		</script>
 		{% block head_page %}{% endblock %}
 	</head>
 	<body>
@@ -37,7 +30,7 @@
 					<li{% if type == 'index' %} class="current_item"{% endif %}><a href="/">Главная</a></li>
 					<li{% if type == 'blog' %} class="current_item"{% endif %}><a href="/blog/">Бложек</a></li>
 					<li{% if type == 'links' %} class="current_item"{% endif %}><a href="/links/">Линкоблог</a></li>
-					<li{% if type == 'creative' %} class="current_item"{% endif%}><a href="/creative/">Творю</a></li>
+					<!--<li{% if type == 'creative' %} class="current_item"{% endif%}><a href="/creative/">Творю</a></li>-->
 				</ul>
 			</nav>
 		</div>
@@ -61,17 +54,6 @@
 						s.parentNode.insertBefore(g,s)
 					}(document,"script"));
 				</script>
-				{% if login_url %}
-				<div class="admin_desk">
-					{% if is_admin %}
-						<a href="javascript:Q=document.selection?document.selection.createRange().text:document.getSelection();void(window.open('http://www.vitalvas.com/links/new_link?topframe=1&descr='+Q+'&url='+document.location.href,'link','scrollbars=yes,width=800,height=700,left=0,top=0,resizable=yes,status=yes'));">JS Линкблога</a><br>
-						<a href="/blog/new_post">Написать в блог</a><br>
-						<a href="{{logout_url}}">Выйти</a>
-					{% else %}
-						<a href="{{login_url}}" style="color:#555;">Войти</a>
-					{% endif %}
-				</div>
-				{% endif %}
 				<span class="coppyr">&copy; vitalvas 1993-2013</span>
 			</div>
 		</div>

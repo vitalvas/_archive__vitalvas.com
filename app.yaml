@@ -1,44 +1,16 @@
-application: blogek-3v
-version: 1-2
-runtime: python27
-api_version: 1
-threadsafe: yes
+application: mypage
+domain: [vitalvas.com, www.vitalvas.com]
+runtime: django
 
-error_handlers:
-- file: templates/error.html
-
-admin_console:
-    pages:
-    - name: Add new post
-      url: /blog/new_post
-    - name: Add new Link
-      url: /links/new_link
+#error_handlers:
+#- 404: templates/404.html
 
 handlers:
-- url: /favicon\.ico
-  static_files: static/favicon.ico
-  upload: static/favicon\.ico
-
-- url: /robots\.txt
-  static_files: robots.txt
-  upload: robots\.txt
-
-- url: /static/(.*)
-  static_files: static/\1
-  upload: static/(.*)
-
-- url: /links/new_link
-  script: main.app
-  login: admin
-
-- url: /blog/new_post
-  script: main.app
-  login: admin
-
-- url: .*
-  script: main.app
-
-libraries:
-- name: webapp2
-  version: "2.5.1"
-
+- url: /static/
+  static_files: /static/
+- url: /static/admin/
+  static_files: /srv/env/lib/python2.6/site-packages/django/contrib/admin/static/admin/
+- url: /favicon.ico
+  static_files: /static/favicon.ico
+- url: /robots.txt
+  static_files: /static/robots.txt
