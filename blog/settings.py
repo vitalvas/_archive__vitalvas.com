@@ -22,12 +22,12 @@ DATABASES = {
     }
 }
 if '/srv/apps' not in os.getcwd():
-    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
-    DATABASES['default']['NAME'] = 'mypage.db'
+ #   DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
+ #   DATABASES['default']['NAME'] = 'mypage.db'
     DEBUG = True
     TEMPLATE_DEBUG = True
-
-
+else:
+    PREPEND_WWW = True
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

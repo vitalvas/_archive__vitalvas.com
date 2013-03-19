@@ -1,16 +1,17 @@
-<rss version="0.92">
+<?xml version="1.0"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>VitalVas здесь был</title>
 		<link>http://www.vitalvas.com/</link>
 		<description>Он не только был здесь, а есть и будет сколько захочет</description>
-		<lastBuildDate></lastBuildDate>
-		<docs>http://backend.userland.conf/rss092</docs>
+		<lastBuildDate>{{now}}</lastBuildDate>
 		<language>ru</language>
 		{% for it in items %}
 		<item>
-			<title>{{it.title}}</title>
-			<description><![CDATA[{{it.content|safe|truncatewords:30}}[...]]]></description>
-			<link>{{it.link|safe}}</link>
+			<title>{% if it.2 == 'link' %}[ Ссылка ] {% endif %}{{it.1|safe}}</title>
+			{% if it.2 == 'post' %}<description><![CDATA[{{it.4|safe|truncatewords:30}}]]></description>{% endif %}
+			<link>{{it.0|safe}}</link>
+			<pubDate>{{it.3}}</pubDate>
 		</item>
 		{% endfor %}
 	</channel>

@@ -2,7 +2,7 @@
 {% block title_page %}{% if act == 'category' %}Категории{% endif %}{% if act == 'list'%}Бложек{% endif %}{% if post.title %}{{post.title}}{% endif %} - VitalVas{% endblock %}
 {% block head_page %}
 <script type="text/javascript">
-	var disqus_shortname = 'newtestthis';
+	var disqus_shortname = 'vvitalvasblog';
 	{% if act == 'post' %}
 	var disqus_url = '{{conf.domain}}{{post.url}}';
 	var disqus_identifier = '{{conf.domain}}{{post.url}}';
@@ -33,10 +33,10 @@
 <meta name="twitter:creator" content="@vitalvas">
 <meta name="twitter:url" content="{{ conf.domain }}{{ post.url }}">
 <meta name="twitter:title" content="{{ post.title }}">
-<meta name="twitter:description" content="{{ post.title }}">
+<meta name="twitter:description" content="{{ post.data|safe|truncatewords:30 }}">
 <meta property="og:title" content="{{ post.title|safe }}"/>
 <meta property="og:url" content="{{ conf.domain }}{{ post.url }}"/>
-<meta property="og:description" content="{{ post.title|safe }}"/>
+<meta property="og:description" content="{{ post.data|safe|truncatewords:30 }}"/>
 {% if post.og_img %}
 <meta property="og:image" content="{{post.og_img}}"/>
 <meta name="twitter:image" content="{{post.og_img}}">

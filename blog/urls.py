@@ -11,5 +11,7 @@ urlpatterns = patterns('',
     (r'^blog/tags/$', 'blog.views.show_category'),
     (r'^blog/tags/([a-zA-Z0-9]+)/', 'blog.views.show_tag'),
     (r'^links/$', 'blog.views.links'),
+    (r'^rss.xml$', 'blog.views.rss'),
+    (r'^sitemap.xml$', 'blog.views.sitemap'),
     url(r'^admin/', include(admin.site.urls)),
 ) + staticfiles_urlpatterns()

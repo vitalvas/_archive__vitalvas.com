@@ -29,6 +29,7 @@ class Article(models.Model):
 	data = models.TextField()
 	html_compile = models.TextField(editable=False)
 	tags = models.ManyToManyField(Tag)
+	pinged = models.BooleanField(default=False)
 	def __unicode__(self):
 		return self.title
 	def save(self, *args, **kwargs):
@@ -47,6 +48,7 @@ class Link(models.Model):
 	post_title = models.TextField(blank=True, null=True)
 	published = models.DateTimeField(db_index=True)
 	publish = models.BooleanField(default=True)
+	pinged = models.BooleanField(default=False)
 	def __unicode__(self):
 		return self.title
 	class Meta:
