@@ -52,7 +52,7 @@
 	<p>
 		<ul>
 		{% for t in tags %}
-			<li><a href="/blog/tags/{{t.url}}/">{{t}}</a> ({{t.post_set.count}})</li>
+			<li><a href="/blog/tags/{{t.slug}}/">{{t}}</a> ({{t.article_set.count}})</li>
 		{% endfor %}
 		</ul>
 	</p>

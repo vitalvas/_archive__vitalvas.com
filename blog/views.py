@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import re
+import re, xmlrpclib
 from django.shortcuts import render_to_response
 from django.http import Http404
 from django.db import connection
 from blog.models import *
 from datetime import datetime
+from blog.settings import ping
 
 CONF = dict(domain='http://www.vitalvas.com')
 
@@ -24,12 +25,22 @@ def blog_list(self):
 		it.html_compile = it.html_compile.replace('<!-- more -->', '<!--more-->')
 		it.html_compile = it.html_compile.split("<!--more-->")[0]
 		items.append(it)
+		if it.pinged is False:
+			for ping_link in ping:
+				try:
+					rpc = xmlrpclib.Server(ping_link)
+					rpc.weblogUpdates.ping(it.title, "%s%s" % (CONF['domain'], it.url))
+				except:
+					pass
+			post = Article.objects.get(slug=it.slug, published=it.published)
+			post.pinged = True
+			post.save()
 	return render_to_response('blog.html', dict(type='blog', act='list', posts=items, conf=CONF))
 
 def blog_show(self, year, month, day, name):
 	try:
 		item = Article.objects.get(slug=name, published__year=year, published__month=month, published__day=day)
-		item.url = '/blog/%s/%s/' % ( "/".join([year, month, day]), name )
+		item.url = '/blog/%s/' % "/".join([year, month, day, name])
 		og_img = re.findall('img .*?src="(.*?)"', item.html_compile)
 		if og_img:
 			item.og_img = og_img[0]
@@ -39,9 +50,9 @@ def blog_show(self, year, month, day, name):
 		return render_to_response('blog.html', dict(type='blog', act='post', post=item, conf=CONF))
 
 
-def show_category(self):
-	items = Category.objects.all()
-	return render_to_response('blog.html', dict(type='blog', act='category', tags=list(items)))
+def show_tag(self, tag=False):
+	items = Tag.objects.all()
+	return render_to_response('blog.html', dict(type='blog', act='tags', tags=items))
 
 def rss(self):
 	cursor = connection.cursor()
@@ -66,7 +77,3 @@ def rss(self):
 		""")
 	rows = cursor.fetchall()
 	return render_to_response('rss.xml', dict(items=rows, now=datetime.now()), mimetype="application/rss+xml")
-
-
-
-show_tag = show_category

@@ -2,7 +2,7 @@
 import os
 _PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -28,6 +28,17 @@ if '/srv/apps' not in os.getcwd():
     TEMPLATE_DEBUG = True
 else:
     PREPEND_WWW = True
+
+
+
+ping = [
+    'http://ping.blogs.yandex.ru/RPC2',
+    'http://blogsearch.google.com/ping/RPC2',
+    'http://ping.feedburner.com',
+    'http://rpc.weblogs.com/RPC2'
+]
+
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

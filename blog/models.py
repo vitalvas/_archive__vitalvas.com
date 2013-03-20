@@ -67,9 +67,9 @@ admin.site.register(Link, AdminLink)
 
 
 
-admin.site.register(Article, list_display = ('slug', 'title', 'published', 'publish'),
+admin.site.register(Article, list_display = ('slug', 'title', 'published', 'publish', 'pinged'),
 	date_hierarchy = 'published', list_filter = ('publish', 'tags'),
-	filter_horizontal = ('tags',),search_fields = ('slug', 'title'))
+	filter_horizontal = ('tags',), search_fields = ('slug', 'title'))
 
 
 
