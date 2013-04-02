@@ -1,9 +1,6 @@
 application: mypage
-domain: [vitalvas.com, www.vitalvas.com]
+domain: [vitalvas.com, www.vitalvas.com, blog.vitalvas.com, new.vitalvas.com]
 runtime: django
-
-#error_handlers:
-#- 404: templates/404.html
 
 handlers:
 - url: /static/
@@ -14,5 +11,11 @@ handlers:
   static_files: /static/favicon.ico
 - url: /robots.txt
   static_files: /static/robots.txt
+- host: blog.vitalvas.com
+  code: 301
+  new_url: http://vitalvas.com
+- host: new.vitalvas.com
+  code: 301
+  new_url: http://vitalvas.com
 
 require: [django, pytils, markdown2]
