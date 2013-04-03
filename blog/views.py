@@ -67,7 +67,7 @@ def rss(self):
 			published,
 			data AS content
 			FROM blog_article WHERE publish='t' AND published<NOW()) a 
-		UNION SELECT * FROM 
+		UNION ALL SELECT * FROM 
 		(SELECT 
 			link,
 			concat(pre_title,' ',title,' ',post_title) AS title,
