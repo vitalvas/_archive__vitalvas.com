@@ -20,20 +20,18 @@ sitemap = lambda self: render_to_response('sitemap.xml', dict(post=Article.objec
 def blog_list(self):
 	items_orig = Article.objects.filter(publish=True).filter(published__lt=datetime.now()).order_by('-published')[:10]
 	items = []
-	lock=False
 	for it in items_orig:
 		it.url = '/blog/%s/%s/' % ( str(it.published).replace('-','/').split(' ')[0], it.slug )
 		it.html_compile = it.html_compile.replace('<!-- more -->', '<!--more-->')
 		it.html_compile = it.html_compile.split("<!--more-->")[0]
 		items.append(it)
 		if it.pinged is False:
-			if lock is False:
-				for ping_link in ping:
-					try:
-						rpc = xmlrpclib.Server(ping_link)
-						print rpc.weblogUpdates.ping(CONF['name'], CONF['domain'])
-					except:
-						pass
+			for ping_link in ping:
+				try:
+					rpc = xmlrpclib.Server(ping_link)
+					rpc.weblogUpdates.ping(CONF['name'], CONF['domain'], ''.join([CONF['domain'], it.url]))
+				except:
+					pass
 			post = Article.objects.get(slug=it.slug, published=it.published)
 			post.pinged = True
 			post.save()

@@ -22,8 +22,6 @@ DATABASES = {
     }
 }
 if '/srv/apps' not in os.getcwd():
- #   DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
- #   DATABASES['default']['NAME'] = 'mypage.db'
     DEBUG = True
     TEMPLATE_DEBUG = True
 else:
@@ -34,8 +32,11 @@ else:
 ping = [
     'http://ping.blogs.yandex.ru/RPC2',
     'http://blogsearch.google.com/ping/RPC2',
+    'http://blogsearch.google.com.ua/ping/RPC2',
+    'http://blogsearch.google.ru/ping/RPC2',
     'http://ping.feedburner.com',
-    'http://rpc.weblogs.com/RPC2'
+    'http://rpc.weblogs.com/RPC2',
+    'http://rpc.pingomatic.com/'
 ]
 
 
