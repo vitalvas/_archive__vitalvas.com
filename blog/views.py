@@ -17,8 +17,11 @@ links = lambda self: render_to_response('links.html', dict(type='links', links=L
 
 sitemap = lambda self: render_to_response('sitemap.xml', dict(post=Article.objects.filter(publish=True)), mimetype="application/xml")
 
-def blog_list(self):
-	items_orig = Article.objects.filter(publish=True).filter(published__lt=datetime.now()).order_by('-published')[:10]
+def blog_list(self, tag=False):
+	if tag:
+		items_orig = Article.objects.filter(tags__slug__exact=tag).filter(publish=True).filter(published__lt=datetime.now())[:10]
+	else:
+		items_orig = Article.objects.filter(publish=True).filter(published__lt=datetime.now())[:10]
 	items = []
 	for it in items_orig:
 		it.url = '/blog/%s/%s/' % ( str(it.published).replace('-','/').split(' ')[0], it.slug )
@@ -50,9 +53,9 @@ def blog_show(self, year, month, day, name):
 		return render_to_response('blog.html', dict(type='blog', act='post', post=item, conf=CONF))
 
 
-def show_tag(self, tag=False):
-	items = Tag.objects.all()
-	return render_to_response('blog.html', dict(type='blog', act='tags', tags=items))
+#def show_tag(self, tag=False):
+#	items = Tag.objects.all()
+#	return render_to_response('blog.html', dict(type='blog', act='tags', tags=items))
 
 def rss(self):
 	cursor = connection.cursor()

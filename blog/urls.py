@@ -5,13 +5,12 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^$', 'blog.views.index'),
-    (r'^blog/$', 'blog.views.blog_list'),
-    (r'^blog/([0-9]{4})/([0-9]{2})/([0-9]{2})/([a-zA-Z0-9-]+)+/$', 'blog.views.blog_show'),
-    (r'^blog/tags/$', 'blog.views.show_tag'),
-    (r'^blog/tags/([a-zA-Z0-9]+)/', 'blog.views.show_tag'),
-    (r'^links/$', 'blog.views.links'),
-    (r'^feed$', 'blog.views.rss'),
-    (r'^sitemap.xml$', 'blog.views.sitemap'),
-    url(r'^admin/', include(admin.site.urls)),
+	(r'^$', 'blog.views.index'),
+	(r'^blog/$', 'blog.views.blog_list'),
+	(r'^blog/([0-9]{4})/([0-9]{2})/([0-9]{2})/([a-zA-Z0-9-]+)+/$', 'blog.views.blog_show'),
+	(r'^blog/tags/([a-zA-Z0-9]+)/', 'blog.views.blog_list'),
+	(r'^links/$', 'blog.views.links'),
+	(r'^feed$', 'blog.views.rss'),
+	(r'^sitemap.xml$', 'blog.views.sitemap'),
+	url(r'^admin/', include(admin.site.urls)),
 ) + staticfiles_urlpatterns()

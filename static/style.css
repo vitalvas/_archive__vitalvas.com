@@ -3,8 +3,8 @@
 @import url(http://fonts.googleapis.com/css?family=Bad+Script&subset=cyrillic);
 @import url(http://fonts.googleapis.com/css?family=Philosopher&subset=cyrillic);
 html, body, div, span, img, ol, ul, li, form, tr, td {margin:0;padding:0;}
-html, body {margin:0;padding:0;color:#555;background:rgb(60,60,60) url(background.png);}
-.header_wrap {height:90px;min-width:940px;}
+html, body {margin:0;padding:0;color:#555;}
+.header_wrap {height:90px;min-width:940px;background:rgb(60,60,60) url(background.png);}
 .header_wrap nav {width:940px;position:relative;height:90px;margin:0 auto;}
 .header_wrap nav .title {cursor:default;color:rgb(110,110,110);line-height: 64px; font-size:1em;}
 .header_wrap nav .title #hover-color {color:white;font-size:1.3em;}
@@ -14,10 +14,10 @@ html, body {margin:0;padding:0;color:#555;background:rgb(60,60,60) url(backgroun
 	background-color:#000;padding:7px 13px;margin-right:2px;border-bottom:0px solid #000; font-family:Arial,Helvetica,sans-serif;}
 .header_wrap .menu li.current_item a,
 .header_wrap .menu li a:hover {background-color:white;color:#000;border-bottom:0px dashed #e0e0e0;}
-.content_wrap {min-width:980px;min-height:580px;background-color:white;}
+.content_wrap {min-width:980px;background-color:white;}
 .content_container {width:940px;margin:0 auto;padding:20px;}
 .footer_wrap { background-color: white; }
-.footer_container {width:940px;min-width:940px;margin:0 auto;padding:20px 0 30px 0;position: relative;font-size: .8em; min-height: 50px;}
+.footer_container {width:940px;min-width:940px;margin:0 auto;position:relative;font-size: .8em;margin-top:30px;}
 .footer_container .coppyr {position:absolute;right:0;bottom:0;}
 .footer_container .admin_desk {position:absolute;right:0;}
 a, a:visited {text-decoration:none; color:#08C;}
