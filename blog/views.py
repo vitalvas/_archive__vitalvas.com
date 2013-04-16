@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import re, xmlrpclib
+import re, xmlrpclib, pyatom
 from django.shortcuts import render_to_response
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.db import connection
 from blog.models import *
 from datetime import datetime
@@ -63,7 +63,7 @@ def rss(self):
 			title,
 			'post' AS type,
 			published,
-			data AS content
+			html_compile AS content
 			FROM blog_article WHERE publish='t' AND published<NOW()) a 
 		UNION ALL SELECT * FROM 
 		(SELECT 
@@ -76,4 +76,22 @@ def rss(self):
 		ORDER BY published DESC LIMIT 15
 		""")
 	rows = cursor.fetchall()
-	return render_to_response('rss.xml', dict(items=rows, now=datetime.now()), mimetype="application/rss+xml")
+	feed = pyatom.AtomFeed(
+		title=str(CONF['name']).decode('utf-8'),
+		feed_url='http://www.vitalvas.com/feed',
+		url=CONF['domain'],
+		author='Виталий Василенко'.decode('utf-8')
+	)
+	for row in rows:
+		title = row[1]
+		if row[2] == 'link':
+			title = " ".join(['[ Ссылка ]'.decode('utf-8'), row[1]])
+		feed.add(
+			title=title,
+			content=row[4],
+			content_type='html',
+			author='VitalVas',
+			url=row[0],
+			updated=row[3]
+		)
+	return HttpResponse(feed.to_string())
