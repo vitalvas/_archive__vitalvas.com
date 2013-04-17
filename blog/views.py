@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import re, xmlrpclib, pyatom
+from datetime import datetime
+
 from django.shortcuts import render_to_response
 from django.http import Http404, HttpResponse
 from django.db import connection
+
 from blog.models import *
-from datetime import datetime
 from blog.settings import ping
 
 CONF = dict(domain='http://www.vitalvas.com', name='VitalVas здесь был')
@@ -66,7 +68,12 @@ def rss(self):
 			title,
 			'post' AS type,
 			published,
-			html_compile AS content
+			html_compile AS content,
+			(
+				SELECT action_time FROM django_admin_log t1 WHERE content_type_id=(
+					SELECT id FROM django_content_type WHERE app_label='blog' AND model='article'
+				) AND t1.object_id=blog_article.id::text ORDER BY id DESC LIMIT 1
+			)::timestamp AS last
 			FROM blog_article WHERE publish='t' AND published<NOW()) a 
 		UNION ALL SELECT * FROM 
 		(SELECT 
@@ -74,7 +81,12 @@ def rss(self):
 			concat(pre_title,' ',title,' ',post_title) AS title,
 			'link' AS type,
 			published,
-			'' AS content
+			'' AS content,
+			(
+				SELECT action_time FROM django_admin_log t1 WHERE content_type_id=(
+					SELECT id FROM django_content_type WHERE app_label='blog' AND model='link'
+				) AND t1.object_id=blog_link.id::text ORDER BY id DESC LIMIT 1
+			)::timestamp AS last
 			FROM blog_link WHERE publish='t' AND published<NOW()) b 
 		ORDER BY published DESC LIMIT 15
 		""")
@@ -95,6 +107,7 @@ def rss(self):
 			content_type='html',
 			author='VitalVas',
 			url=row[0],
-			updated=row[3]
+			published=row[3],
+			updated=row[5]
 		)
-	return HttpResponse(feed.to_string())
+	return HttpResponse(feed.to_string(), content_type='application/xml')
