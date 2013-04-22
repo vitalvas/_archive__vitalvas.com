@@ -25,7 +25,7 @@ class Article(models.Model):
 	slug = models.SlugField(unique=True, blank=True)
 	title = models.CharField(max_length=100)
 	published = models.DateTimeField(blank=True, null=True, db_index=True)
-	publish = models.BooleanField(default=True)
+	publish = models.BooleanField(default=True, db_index=True)
 	data = models.TextField()
 	html_compile = models.TextField(editable=False)
 	tags = models.ManyToManyField(Tag)
@@ -47,7 +47,7 @@ class Link(models.Model):
 	title = models.TextField()
 	post_title = models.TextField(blank=True, null=True)
 	published = models.DateTimeField(db_index=True)
-	publish = models.BooleanField(default=True)
+	publish = models.BooleanField(default=True, db_index=True)
 	pinged = models.BooleanField(default=False)
 	def __unicode__(self):
 		return self.title

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import re, xmlrpclib, pyatom
+import re, xmlrpclib, pyatom, pysitemap
 from datetime import datetime
 
 from django.shortcuts import render_to_response
@@ -16,8 +16,6 @@ CONF = dict(domain='http://www.vitalvas.com', name='VitalVas здесь был')
 index = lambda self: render_to_response('main.html', dict(type='index'))
 
 links = lambda self: render_to_response('links.html', dict(type='links', links=Link.objects.filter(publish=True)[:50]))
-
-sitemap = lambda self: render_to_response('sitemap.xml', dict(post=Article.objects.filter(publish=True)), mimetype="application/xml")
 
 def blog_list(self, tag=False):
 	if tag:
@@ -54,10 +52,9 @@ def blog_show(self, year, month, day, name):
 	else:
 		return render_to_response('blog.html', dict(type='blog', act='post', post=item, conf=CONF))
 
-
-#def show_tag(self, tag=False):
-#	items = Tag.objects.all()
-#	return render_to_response('blog.html', dict(type='blog', act='tags', tags=items))
+def blog_archives(self):
+	items = Article.objects.dates('published', 'month')
+	return render_to_response('archives.html', {'posts':sorted(items,reverse=True)})
 
 def rss(self):
 	cursor = connection.cursor()
@@ -110,4 +107,24 @@ def rss(self):
 			published=row[3],
 			updated=row[5]
 		)
-	return HttpResponse(feed.to_string(), content_type='application/xml')
+	return HttpResponse(feed.to_string(), content_type='text/xml')
+
+def sitemap(self):
+	xml = pysitemap.SiteMap(domain=CONF['domain'], timezone='+02:00')
+	for i in ['blog/', 'blog/archives/', 'links/']:
+		xml.add(loc="/".join([CONF['domain'], i]), changefreq='daily')
+	for item in Article.objects.filter(publish=True):
+		xml.add(
+			loc="/".join([CONF['domain'], 'blog', str(item.published).replace('-','/').split(' ')[0], item.slug, '']),
+			priority=0.75,
+			lastmod=item.published,
+			changefreq='weekly'
+		)
+	for item in Tag.objects.all():
+		xml.add(
+			loc='/'.join([CONF['domain'], 'blog', 'tags', item.slug, '']),
+			priority=0.3,
+			changefreq='monthly'
+		)
+	return HttpResponse(xml.to_string(), content_type='text/xml')
+
