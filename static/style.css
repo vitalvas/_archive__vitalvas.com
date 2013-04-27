@@ -23,12 +23,9 @@ html, body {margin:0;padding:0;color:#555;}
 a, a:visited {text-decoration:none; color:#08C;}
 a:hover {text-decoration:underline;color:005580;}
 .entry-content {text-align:justify;}
-.entry-content img {margin:10px;}
-.entry-content img:not([alt*="noborder"]) {border-radius:0.3em;box-shadow:rgba(0,0,0,0.15) 0 1px 4px;border:#fff 0.4em solid;}
 .entry-content img[alt*="center"] {margin:0 auto;display:block;}
 .entry-content img[alt*="left"] {float:left;margin-left:0px;display:block;}
 .entry-content img[alt*="right"] {float:right;margin-right:0px;margin-top:0px;display:block;}
-.entry-content img[alt*="noborder"] {border:0px dotted transparent;}
 .entry-content li { margin-left:20px;}
 .entry-footer {padding:4px; margin:10px 0;font-size:0.8em; background-color:rgb(226,226,226);}
 a[rel="full-article"] {background:#e2e2e2;display:inline-block;text-decoration:none;color:#666;padding:0.3em 0.6em;
