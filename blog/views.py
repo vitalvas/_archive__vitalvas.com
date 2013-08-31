@@ -15,8 +15,6 @@ CONF = dict(domain='http://www.vitalvas.com', name='VitalVas здесь был')
 
 index = lambda self: render_to_response('main.html', dict(type='index'))
 
-links = lambda self: render_to_response('links.html', dict(type='links', links=Link.objects.filter(publish=True)[:50]))
-
 def blog_list(self, tag=False):
 	if tag:
 		items_orig = Article.objects.filter(tags__slug__exact=tag).filter(publish=True).filter(published__lt=datetime.now())[:10]
@@ -52,66 +50,29 @@ def blog_show(self, year, month, day, name):
 	else:
 		return render_to_response('blog.html', dict(type='blog', act='post', post=item, conf=CONF))
 
-def blog_archives(self):
-	items = Article.objects.dates('published', 'month')
-	return render_to_response('archives.html', {'posts':sorted(items,reverse=True)})
-
 def rss(self):
-	cursor = connection.cursor()
-	cursor.execute("""
-		SELECT * FROM 
-		(SELECT 
-			concat('http://www.vitalvas.com/blog/',to_char(DATE(published), 'YYYY/MM/DD'),'/',slug, '/') AS link,
-			title,
-			'post' AS type,
-			published,
-			html_compile AS content,
-			(
-				SELECT action_time FROM django_admin_log t1 WHERE content_type_id=(
-					SELECT id FROM django_content_type WHERE app_label='blog' AND model='article'
-				) AND t1.object_id=blog_article.id::text ORDER BY id DESC LIMIT 1
-			)::timestamp AS last
-			FROM blog_article WHERE publish='t' AND published<NOW()) a 
-		UNION ALL SELECT * FROM 
-		(SELECT 
-			link,
-			concat(pre_title,' ',title,' ',post_title) AS title,
-			'link' AS type,
-			published,
-			'' AS content,
-			(
-				SELECT action_time FROM django_admin_log t1 WHERE content_type_id=(
-					SELECT id FROM django_content_type WHERE app_label='blog' AND model='link'
-				) AND t1.object_id=blog_link.id::text ORDER BY id DESC LIMIT 1
-			)::timestamp AS last
-			FROM blog_link WHERE publish='t' AND published<NOW()) b 
-		ORDER BY published DESC LIMIT 15
-		""")
-	rows = cursor.fetchall()
+	items = Article.objects.filter(publish=True).filter(published__lt=datetime.now())[:15]
 	feed = pyatom.AtomFeed(
 		title=str(CONF['name']).decode('utf-8'),
-		feed_url='http://www.vitalvas.com/feed',
+		feed_url='http://www.vitalvas.com/feed.blog',
 		url=CONF['domain'],
 		author='Виталий Василенко'.decode('utf-8')
 	)
-	for row in rows:
-		title = row[1]
-		if row[2] == 'link':
-			title = " ".join(['[ Ссылка ]'.decode('utf-8'), row[1]])
+	for item in items:
 		feed.add(
-			title=title,
-			content=row[4],
+			title=item.title,
+			content=item.html_compile,
 			content_type='html',
 			author='VitalVas',
-			url=row[0],
-			published=row[3],
-			updated=row[5]
+			url='/'.join([CONF['domain'],'blog',str(item.published).replace('-','/').split(' ')[0], item.slug, '']),
+			updated=item.updated
 		)
 	return HttpResponse(feed.to_string(), content_type='text/xml')
 
+
 def sitemap(self):
 	xml = pysitemap.SiteMap(domain=CONF['domain'], timezone='+02:00')
-	for i in ['blog/', 'blog/archives/', 'links/']:
+	for i in ['blog/', 'blog/archives/']:
 		xml.add(loc="/".join([CONF['domain'], i]), changefreq='daily')
 	for item in Article.objects.filter(publish=True):
 		xml.add(
