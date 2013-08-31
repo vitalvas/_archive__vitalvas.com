@@ -1,12 +1,12 @@
 application: mypage
-domain: [vitalvas.com, www.vitalvas.com, blog.vitalvas.com, new.vitalvas.com]
+domain: [vitalvas.com, www.vitalvas.com, blog.vitalvas.com]
 runtime: django
 
 handlers:
 - url: /static/
   static_files: /static/
 - url: /static/admin/
-  static_files: /srv/env/lib/python2.6/site-packages/django/contrib/admin/static/admin/
+  static_files: {{venv_lib_pkg}}/django/contrib/admin/static/admin/
 - url: /favicon.ico
   static_files: /static/favicon.ico
 - url: /robots.txt
@@ -14,8 +14,10 @@ handlers:
 - host: blog.vitalvas.com
   code: 301
   new_url: http://vitalvas.com
-- host: new.vitalvas.com
-  code: 301
-  new_url: http://vitalvas.com
 
-require: [django, pytils, markdown2, pyatom, pysitemap]
+require: [django, pytils, markdown2, pyatom, pysitemap, psycopg2]
+
+cron:
+- description: Update code
+  commands: ['git pull', '/usr/bin/env appctl update restart']
+  schedule: every day 03:00
