@@ -54,7 +54,7 @@ def rss(self):
 	items = Article.objects.filter(publish=True).filter(published__lt=datetime.now())[:15]
 	feed = pyatom.AtomFeed(
 		title=str(CONF['name']).decode('utf-8'),
-		feed_url='http://www.vitalvas.com/feed.blog',
+		feed_url='http://www.vitalvas.com/feed',
 		url=CONF['domain'],
 		author='Виталий Василенко'.decode('utf-8')
 	)
