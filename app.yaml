@@ -15,7 +15,7 @@ handlers:
   code: 301
   new_url: http://vitalvas.com
 
-require: [django, pytils, markdown2, pyatom, pysitemap, psycopg2]
+require: [django, pytils, markdown2, pyatom, pysitemap, MySQL-python]
 
 cron:
 - description: Update code
