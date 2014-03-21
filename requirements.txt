@@ -1,0 +1,8 @@
+Django==1.6.2
+pytils==0.3
+pytz==2013.9
+markdown2==2.2.0
+gunicorn==18.0
+MySQL-python==1.2.5
+django-htmlmin==0.6.3
+pyatom==1.4

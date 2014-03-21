@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ item.title }} - The VitalVas{% endblock %}
+
+{% block head %}
+{% if item.token not in request %}
+<script type="text/javascript">
+    var disqus_url = 'http://www.vitalvas.com{{ request }}';
+    var disqus_identifier = 'http://www.vitalvas.com{{ request }}';
+    (function () {
+        var s = document.createElement('script'); s.async = true; s.type = 'text/javascript';
+        s.src = 'http://vvitalvasblog.disqus.com/embed.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+{% endif %}
+{% endblock %}
+
+{% block data %}
+<div class="blog-content-show" itemscope itemtype="http://schema.org/Article">
+    <h3 itemprop="name" class="stitle">{{ item.title }}</h3>
+    <p class="muted">
+        <small>
+            {% if item.published %}{{ item.published }}{% else %}еще не опубликовано{% endif %}{% if item.tags.all %},&nbsp;
+            {% for m in item.tags.all %}
+                <a href="{{ m.get_absolute_url }}">{{ m.title }}</a> {% if not forloop.last %} &bull; {% endif %}
+            {% endfor %}
+            {% endif %}
+        </small>
+    </p>
+    <div class="body">
+        {{ item.html_compile|safe }}
+    </div>
+    {% if item.token not in request %}
+    <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+    <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareQuickServices="yaru,vkontakte,facebook,twitter,odnoklassniki,moimir,gplus" data-yashareTheme="counter"></div>
+    <div id="disqus_thread" aria-live="polite">
+        <noscript>
+            Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a>
+        </noscript>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

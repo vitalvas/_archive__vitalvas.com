@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ item.title }} - The VitalVas{% endblock %}
+
+{% block data %}
+<div class="blog-content-show">
+    <h3 class="stitle">{{ item.title }}</h3>
+    <div class="body">
+        {{ item.html_compile|safe }}
+    </div>
+</div>
+{% endblock %}

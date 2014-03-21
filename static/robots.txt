@@ -1,9 +1,5 @@
 User-agent: *
-Disallow: /post/*
-Disallow: /category/*
-Disallow: /tag/*
-Disallow: /tagged/*
-Disallow: /archive/*
-Crawl-delay: 3
+Disallow: /blog/token/
+Crawl-delay: 1
 Sitemap: http://www.vitalvas.com/sitemap.xml
 Host: www.vitalvas.com

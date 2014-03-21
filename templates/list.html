@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load display %}
+
+{% block title %}{% if tag %}Записи с тегом: {{ tag }}{% else %}Бложек{% endif %} - The VitalVas{% endblock %}
+
+{% block data %}
+<div class="blog-content">
+    {% if tag %}
+        <h3>Записи с тегом: {{ tag }}</h3>
+    {% endif %}
+
+    {% if not items %}
+        <h4>Ой...Здесь ничего нет :(</h4>
+    {% endif %}
+
+    {% for i in items %}
+        <div class="post">
+            <h4 class="stitle">
+                <a href="{{ i.get_absolute_url }}">{{ i.title }}</a>
+            </h4>
+            <p class="muted">
+                <small>
+                    {{ i.published }}{% if i.tags.all %},&nbsp;
+                    {% for m in i.tags.all %}
+                        <a href="{{ m.get_absolute_url }}">{{ m.title }}</a> {% if not forloop.last %} &bull; {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </small>
+            </p>
+            <div class="body">
+                {{ i.html_compile|safe|cut_preview|safe }}
+            </div>
+        </div>
+    {% endfor %}
+    <br>
+    <p>
+        <a href="{% url 'blog_archives' %}">Все записи</a>
+    </p>
+</div>
+{% endblock %}
+

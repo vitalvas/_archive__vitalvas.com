@@ -1,23 +1,11 @@
-application: mypage
+application: vitalvascom
 domain: [vitalvas.com, www.vitalvas.com, blog.vitalvas.com]
 runtime: django
+require-file: requirements.txt
 
 handlers:
-- url: /static/
-  static_files: /static/
-- url: /static/admin/
-  static_files: {{venv_lib_pkg}}/django/contrib/admin/static/admin/
-- url: /favicon.ico
-  static_files: /static/favicon.ico
-- url: /robots.txt
-  static_files: /static/robots.txt
-- host: blog.vitalvas.com
+- not-host: www.vitalvas.com
   code: 301
-  new_url: http://vitalvas.com
+  new-url: http://www.vitalvas.com
 
-require: [django, pytils, markdown2, pyatom, pysitemap, MySQL-python]
 
-cron:
-- description: Update code
-  commands: ['git pull', '/usr/bin/env appctl update restart']
-  schedule: every day 03:00

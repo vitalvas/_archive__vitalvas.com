@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Архив - The VitalVas{% endblock %}
+
+{% block data %}
+<div class="blog-content">
+{% for i in items %}
+        <div class="post">
+            <h4 class="stitle">
+                <a href="{{ i.get_absolute_url }}">{{ i.title }}</a>
+            </h4>
+            <p class="muted">
+                <small>
+                    {{ i.published }}{% if i.tags.all %},
+                    {% for m in i.tags.all %}
+                        <a href="{{ m.get_absolute_url }}">{{ m.title }}</a> {% if not forloop.last %} &bull; {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </small>
+            </p>
+        </div>
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,61 +1,61 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>{%block title_page%}VitalVas здесь был{%endblock%}</title>
-		<meta name="author" content="VitalVas">
-		<meta name="description" content="{% block description_page %}Руководитель департамента приема в AD. Сектор наземного тестирования{% endblock %}">
-		<meta name="keywords" meta="VitalVas, vitalvas, блог, blog, vvitalvas, персональный сайт, gangnam style, линкблог, линк python, django, mysql, mongodb">
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<meta name='yandex-verification' content='6db1d47f021fa63f' />
-		<meta name="google-site-verification" content="-Lx45KkppBRqs2gwjuFY7Qt5GyEgh1URGJCNWAuLT54" />
-		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="/favicon.ico" type="image/x-icon">
-		<link href="http://www.vitalvas.com/feed" rel="alternate" title="VitalVas здесь был" type="application/atom+xml">
-		<link rel="stylesheet" href="/static/style.css" type="text/css">
-		<!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
-		<script type="text/javascript" src="//yandex.st/jquery/1.8.2/jquery.min.js"></script>
-		<script type="text/javascript" src="/static/js/colors.js"></script>
-		{% block head_page %}{% endblock %}
-	</head>
-	<body>
-		<div class="header_wrap">
-			<nav>
-				<div class="title">
-					<span title="есть и будет" onmouseover="AlterColor()"><span id="hover-color">VitalVas</span> здесь был</span>
-				</div>
-				<ul class="menu">
-					<li{% if type == 'index' %} class="current_item"{% endif %}><a href="/">Главная</a></li>
-					<li{% if type == 'blog' %} class="current_item"{% endif %}><a href="/blog/">Бложек</a></li>
-				</ul>
-			</nav>
+{% load staticfiles %}
+<!doctype html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}The VitalVas{% endblock %}</title>
+	<link rel="stylesheet" href="{% static 'css/bootstrap-2.3.2.min.css' %}">
+	<!--[if lt IE 9]> <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% if item.description %}<meta name="description" content="{{ item.description }}">{% endif %}
+    <meta name="google-site-verification" content="-Lx45KkppBRqs2gwjuFY7Qt5GyEgh1URGJCNWAuLT54" />
+    <link rel="author" href="https://plus.google.com/106762089406071404447" />
+    {% block head %}{% endblock %}
+</head>
+<body>
+	<header>
+		<div class="container header">
+			<ul class="nav nav-pills">
+				<li><a class="brand" href="{% url 'home' %}">The VitalVas &beta;</a></li>
+				<li{% if 'blog/' in request %} class="active"{% endif %}><a href="{% url 'blog' %}">Бложек</a></li>
+                <li{% if '/projects/' in request %} class="active"{% endif %}><a href="{% url 'page' 'projects' %}">Проекты</a></li>
+			</ul>
 		</div>
-		<div class="content_wrap">
-			<div class="content_container">
-				{% block main_content %}{% endblock %}
+	</header>
+
+	<div class="container">
+	<!-- start block -->
+    {% block data %}
+		<div class="row-fluid">
+			<div class="span6">
+				<h3>
+					<a href="{% url 'blog' %}">Блог</a>
+                    <a href="{% url 'feed' %}">
+                        <img src="{% static 'img/rss.png' %}" alt="RSS">
+                    </a>
+				</h3>
+                <ul>
+                    {% for i in items %}
+                        <li><a href="{{ i.get_absolute_url }}">{{ i.title }}</a></li>
+                    {% endfor %}
+                </ul>
+			</div>
+			<div class="span6">
+				<h4>
+					<a href="http://instagram.com/vitalvas" target="_blank">ИнстаГрамм</a>
+				</h4>
+				<div id="instagram"></div>
 			</div>
 		</div>
-		<div class="footer_wrap">
-			<div class="footer_container">
-				<script type="text/javascript">
-				new Image().src = "//counter.yadro.ru/hit?r" + escape(document.referrer)+((typeof(screen)=="undefined")?"":
-				";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth? screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
-				";"+Math.random();
-				</script>
-				<script type="text/javascript">
-					var _gaq=[["_setAccount","UA-28006057-1"],{% if is_admin %}['_setCustomVar', 1, 'admin', 'yes', 2],{% endif %}["_trackPageview"]];
-					(function(d,t){
-						var g=d.createElement(t), s=d.getElementsByTagName(t)[0]; g.async=1;
-						g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";
-						s.parentNode.insertBefore(g,s)
-					}(document,"script"));
-				</script>
-				<span style="color:#a5a5a5;">"VitalVas" вообще ни хрена не зарегистрированная торговая марка.<br>
-				Однако, это не повод, без указания источника, пиздить контент.</span>
-				<span class="coppyr">&copy; VitalVas 1993-2014</span>
-			</div>
-		</div>
-	</body>
+     {% endblock %}
+	<!-- end block -->
+	</div>
+	<footer class="container">
+		2011 - {% now "Y" %} Виталий Василенко &copy; Скопировано правильно
+	</footer>
+</body>
+{% include '_analytic.html' %}
+<script defer src="{% static 'js/jquery-1.11.0.min.js' %}"></script>
+<script defer src="{% static 'js/instagram.js' %}"></script>
+<script defer src="{% static 'js/app.js' %}"></script>
 </html>
