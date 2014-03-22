@@ -49,3 +49,50 @@ footer {
     margin-bottom: 0px;
   }
 }
+
+.socialicon {
+  li {
+    float: right;
+  }
+  a {
+    width: 30px;
+    height: 30px;
+    margin: 5px 3px;
+  }
+  .sshow(@img) {
+    transition-duration: 0.2s;
+    background: url(@img);
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+  }
+  .facebook {
+    .sshow("../img/facebook_no.png");
+  }
+  .facebook:hover {
+    .sshow("../img/facebook.png");
+  }
+  .twitter {
+    .sshow("../img/twitter_no.png");
+  }
+  .twitter:hover {
+    .sshow("../img/twitter.png");
+  }
+  .googleplus {
+    .sshow("../img/gplus_no.png");
+  }
+  .googleplus:hover {
+    .sshow("../img/gplus.png");
+  }
+  .linkedin {
+    .sshow("../img/linkedin_no.png");
+  }
+  .linkedin:hover {
+    .sshow("../img/linkedin.png");
+  }
+  .github {
+    .sshow("../img/github_no.png");
+  }
+  .github:hover {
+    .sshow("../img/github.png");
+  }}

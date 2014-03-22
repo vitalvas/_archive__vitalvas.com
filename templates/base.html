@@ -15,11 +15,18 @@
 <body>
 	<header>
 		<div class="container header">
-			<ul class="nav nav-pills">
+			<ul class="nav nav-pills pull-left">
 				<li><a class="brand" href="{% url 'home' %}">The VitalVas &beta;</a></li>
 				<li{% if 'blog/' in request %} class="active"{% endif %}><a href="{% url 'blog' %}">Бложек</a></li>
                 <li{% if '/projects/' in request %} class="active"{% endif %}><a href="{% url 'page' 'projects' %}">Проекты</a></li>
 			</ul>
+            <ul class="nav pull-right socialicon">
+                <li><a href="https://www.facebook.com/VitalVas" class="facebook" target="_blank"></a></li>
+                <li><a href="https://twitter.com/vitalvas" class="twitter" target="_blank"></a></li>
+                <li><a href="https://plus.google.com/106762089406071404447" class="googleplus" target="_blank"></a></li>
+                <li><a href="http://www.linkedin.com/in/vitalvas" class="linkedin" target="_blank"></a></li>
+                <li><a href="https://github.com/vitalvas" class="github" target="_blank"></a></li>
+            </ul>
 		</div>
 	</header>
 
@@ -51,7 +58,7 @@
 	<!-- end block -->
 	</div>
 	<footer class="container">
-		2011 - {% now "Y" %} Виталий Василенко &copy; Скопировано правильно
+		2009 - {% now "Y" %} Виталий Василенко &copy; Скопировано правильно
 	</footer>
 </body>
 {% include '_analytic.html' %}
