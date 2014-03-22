@@ -2,10 +2,8 @@
 import os
 from fabric.api import run, env, cd, roles, sudo
 
-
 env.roledefs['test'] = ['vitalvas@88.198.234.179']
 env.roledefs['production'] = ['root@cs0.adm.jotcdn.net']
-
 
 def production_env():
 	env.key_filename = [os.path.join(os.environ['HOME'], '.ssh', 'id_rsa')]
@@ -13,9 +11,7 @@ def production_env():
 	env.python = '/srv/venv/vitalvascom/bin/python'
 	env.pip = '/srv/venv/vitalvascom/bin/pip'
 
-
-@roles('test')
-def deploy_test():
+def deploy_proc():
 	production_env()
 	with cd(env.project_root):
 		sudo('git pull origin master')
@@ -26,6 +22,10 @@ def deploy_test():
 		sudo('supervisorctl restart vitalvascom')
 		sudo('service nginx reload')
 
+@roles('test')
+def deploy_test():
+	deploy_proc()
+
 @roles('production')
-def deploy_prod():
-	deploy_test()
+def deploy():
+	deploy_proc()
