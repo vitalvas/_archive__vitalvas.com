@@ -14,7 +14,7 @@ def production_env():
 def deploy_proc():
 	production_env()
 	with cd(env.project_root):
-		sudo('git pull origin master')
+		sudo('git pull origin')
 		sudo('{pip} install --upgrade -r {filepath}'.format(pip=env.pip,
 			filepath=os.path.join(env.project_root, 'requirements.txt')))
 		sudo('{} manage.py collectstatic --noinput'.format(env.python))
