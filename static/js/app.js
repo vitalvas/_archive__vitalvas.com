@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	function createPhotoElement(photo) {
-		var innerHtml = $('<img>').addClass('instagram-image').attr('src', photo.images.thumbnail.url);
-		innerHtml = $('<a>').attr('target', '_blank').attr('href', photo.link).append(innerHtml);
+		var innerHtml = $('<img>').addClass('instagram-image').attr('src', photo.images.thumbnail.url.replace('http://','//'));
+		innerHtml = $('<a>').attr('target', '_blank').attr('href', photo.link.replace('http://','//')).append(innerHtml);
 		return $('<div>').addClass('instagram-placeholder').attr('id', photo.id).append(innerHtml);
 	}
 	function didLoadInstagram(event, response) {

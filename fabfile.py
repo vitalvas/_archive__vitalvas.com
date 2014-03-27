@@ -2,8 +2,8 @@
 import os
 from fabric.api import run, env, cd, roles, sudo
 
-env.roledefs['test'] = ['vitalvas@88.198.234.179']
-env.roledefs['production'] = ['root@cs0.adm.jotcdn.net']
+env.roledefs['test'] = ['vitalvas@cs1.jotcdn.net']
+env.roledefs['production'] = ['vitalvas@cs2.jotcdn.net']
 
 def production_env():
 	env.key_filename = [os.path.join(os.environ['HOME'], '.ssh', 'id_rsa')]
