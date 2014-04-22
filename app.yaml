@@ -1,6 +1,6 @@
 application: vitalvascom
 domain: [vitalvas.com, www.vitalvas.com, blog.vitalvas.com]
-runtime: django
+runtime: django#blog.wsgi
 require-file: requirements.txt
 
 handlers:
