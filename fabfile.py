@@ -2,14 +2,13 @@
 import os
 from fabric.api import run, env, cd, roles, sudo
 
-env.roledefs['test'] = ['vitalvas@cs1.jotcdn.net']
-env.roledefs['production'] = ['vitalvas@cs2.jotcdn.net']
+env.roledefs['production'] = ['vitalvas@cs3.jotcdn.net']
 
 def production_env():
 	env.key_filename = [os.path.join(os.environ['HOME'], '.ssh', 'id_rsa')]
 	env.project_root = '/srv/apps/vitalvascom'
-	env.python = '/srv/venv/vitalvascom/bin/python'
-	env.pip = '/srv/venv/vitalvascom/bin/pip'
+	env.python = '/opt/venv/vitalvascom/bin/python'
+	env.pip = '/opt/venv/vitalvascom/bin/pip'
 
 def deploy_proc():
 	production_env()
@@ -22,9 +21,6 @@ def deploy_proc():
 		sudo('supervisorctl restart vitalvascom')
 		sudo('service nginx reload')
 
-@roles('test')
-def deploy_test():
-	deploy_proc()
 
 @roles('production')
 def deploy():
